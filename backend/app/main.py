@@ -2,9 +2,18 @@
 from fastapi import FastAPI
 from app.api import drug_api
 from app.core.db import engine, Base
+from fastapi.middleware.cors import CORSMiddleware
+
 # Tạo app FastAPI
 app = FastAPI(title="Drug OCR Backend")
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Cho phép React gọi
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 # Đăng ký route
 app.include_router(drug_api.router)
 
@@ -18,4 +27,4 @@ def root():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("app.main:app", host="127.0.0.1", port=8000, reload=True)
+    uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
