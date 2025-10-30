@@ -29,5 +29,13 @@ services:
     volumes:
       - .:/app
 
+  frontend:
+    build: ../frontend/drugscan-react-app
+    container_name: drug_frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+
 volumes:
   postgres_data:
